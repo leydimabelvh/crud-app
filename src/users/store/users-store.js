@@ -2,11 +2,15 @@ import { loadUsersByPage } from '../use-cases/load-users-by-page';
 
 const state = {
     currentPage: 0,
-    users: [],
+    userList: [],
 }
 
 const loadNextPage = async() => {
-   await loadUsersByPage( state.currentPage + 1 );
+   const userList = await loadUsersByPage( state.currentPage + 1 );
+   if ( userList.length === 0 ) return;
+
+   state.currentPage += 1;
+   state.userList = userList;
 }
 
 const loadPreviousPage = async() => {
@@ -26,6 +30,14 @@ export default {
    loadPreviousPage,
    onUserChanger,
    reloadPage,
-   getUser: () => [...state.users],
-   getCurrentPage: () => [...state.currentPage],
+   /**
+    * 
+    * @returns {User[]}
+    */
+   getUserList: () => [...state.userList],
+   /**
+    * 
+    * @returns {Number}
+    */
+   getCurrentPage: () => state.currentPage,
 }
