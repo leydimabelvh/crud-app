@@ -1,0 +1,14 @@
+table {
+    background-color: #00000059;
+    border-radius: .25rem;
+}
+
+th,
+td {
+    padding: .5rem;
+    border-radius: .25rem;
+}
+
+th {
+    border-bottom: 1px dashed #b9b9b9;
+}
