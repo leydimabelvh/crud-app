@@ -1,7 +1,7 @@
 import modalHTML from './render-modal.html?raw';
 import './render-modal.css';
 
-let modalContainer;
+let modalContainer, modalForm;
 
 export const showModal = () => {
     modalContainer?.classList.remove( 'hide-modal' );
@@ -9,6 +9,8 @@ export const showModal = () => {
 
 export const hideModal = () => {
     modalContainer?.classList.add( 'hide-modal' );
+
+    modalForm?.reset();
 }
 
 /**
@@ -24,7 +26,7 @@ export const renderModal = ( element ) => {
 
     element.append( modalContainer );
 
-    const modalForm  = document.querySelector( '.modal-form' );
+    modalForm  = document.querySelector( '.modal-form' );
 
     modalContainer.addEventListener( 'click', ( event ) => {
         const isModal = event.target.matches( '.modal-container' );
@@ -36,6 +38,28 @@ export const renderModal = ( element ) => {
 
     modalForm.addEventListener( 'submit', (event) => {
         event.preventDefault();
+
+        const formData = new FormData( modalForm );
+
+        const userLike = {};
+
+        for (const [key, value] of formData) {
+            if ( key === 'balance' ) {
+                userLike[key] = +value;
+                continue
+            }
+
+            if ( key === 'isActive' ) {
+                userLike[key] = ( value === 'on' ) ? true : false;
+                continue;
+            }
+
+            userLike[key] = value;
+        }
+
+        console.log(userLike);
+
+        hideModal();
     } );
 
 }
