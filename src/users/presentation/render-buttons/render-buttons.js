@@ -28,4 +28,10 @@ export const renderButtons = ( element ) => {
         renderTable(); 
     } ); 
 
+    previousButton.addEventListener( 'click', () => {
+        usersStore.loadPreviousPage();
+        currentPageLabel.innerText = usersStore.getCurrentPage();
+        renderTable();
+    })
+
 }
