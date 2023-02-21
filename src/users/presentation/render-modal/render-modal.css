@@ -1,0 +1,63 @@
+.modal-container {
+    background-color: #00000080;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-dialog {
+    background-color: #242424;
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.modal-form-user-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .75rem;
+    width: 100%;
+}
+
+.modal-form-user-content span {
+    font-weight: 500;
+    margin-bottom: .5rem;
+}
+
+.modal-form-user-content input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: .5rem;
+}
+
+.modal-form-validate-content {
+    width: 100%;
+    text-align: left;
+}
+
+.modal-form-button-content {
+    width: 100%;
+}
+
+.modal-form-button {
+    width: 100%;
+    margin: 0;
+}
+
+.hide-modal {
+    display: none !important;
+}
