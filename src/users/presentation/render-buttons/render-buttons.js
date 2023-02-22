@@ -22,14 +22,14 @@ export const renderButtons = ( element ) => {
 
     element.append( previousButton, currentPageLabel, nextButton );
 
-    nextButton.addEventListener( 'click', () => {
-        usersStore.loadNextPage();
+    nextButton.addEventListener( 'click', async() => {
+        await usersStore.loadNextPage();
         currentPageLabel.innerText = usersStore.getCurrentPage();
         renderTable(); 
     } ); 
 
-    previousButton.addEventListener( 'click', () => {
-        usersStore.loadPreviousPage();
+    previousButton.addEventListener( 'click', async() => {
+        await usersStore.loadPreviousPage();
         currentPageLabel.innerText = usersStore.getCurrentPage();
         renderTable();
     })
