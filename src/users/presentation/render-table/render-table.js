@@ -1,4 +1,5 @@
 import usersStore from '../../store/users-store';
+import { showModal } from '../render-modal/render-modal';
 import './render-table.css';
 
 let table;
@@ -18,17 +19,6 @@ const createTable = () => {
     `;
 
     const tableBody = document.createElement( 'tbody' );
-    // tableBody.innerHTML = `
-    //     <tr>
-    //         <td>${usersStore.getUserList().id}</td>
-    //         <td>Mabe</td>
-    //         <td>Mabe</td>
-    //         <td>Mabe</td>
-    //         <td>Mabe</td>
-    //         <td>Mabe</td>
-    //         <td>Mabe</td>
-    //     </tr>
-    // `;
     
     table.append( tableHeader, tableBody );
 
@@ -37,7 +27,20 @@ const createTable = () => {
 
 /**
  * 
- * @param {HTMLDivElement} element 
+ * @param { MouseEvent } event  
+ */
+const tableSelectedListener = (event) => {
+    const element = event.target.closest('.update-user');
+
+    if ( !element ) return;
+
+    const id = element.getAttribute( 'data-id' );
+    showModal( id );
+}
+
+/**
+ * 
+ * @param { HTMLDivElement } element 
  */
 
 export const renderTable = ( element ) => {
@@ -48,7 +51,7 @@ export const renderTable = ( element ) => {
         table = createTable();
         element.append( table );
 
-        // TODO
+        table.addEventListener( 'click', (event) => tableSelectedListener (event) );
     }
 
     let tableHTML = '';
@@ -61,18 +64,13 @@ export const renderTable = ( element ) => {
                 <td>${ user.lastName }</td>
                 <td>${ user.isActive }</td>
                 <td>
-                    <a href="#" data-id="${ user.id }">Update</a>
+                    <a href="#" class="update-user" data-id="${ user.id }">Update</a>
                     |
-                    <a href="#" data-id="${ user.id }">Delete</a>
+                    <a href="#" class="delete-user" data-id="${ user.id }">Delete</a>
                 </td>
             </tr>
         `;
     } );
 
-
-
     table.querySelector( 'tbody' ).innerHTML = tableHTML;
-
-
-
 }
