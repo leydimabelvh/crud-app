@@ -22,8 +22,26 @@ const loadPreviousPage = async() => {
    state.userList = userList;
 }
 
-const onUserChanger = () => {
-   throw new Error('Not implemented');
+/**
+ * 
+ * @param { User } userProcessed 
+ */
+const onUserChanged = ( userProcessed ) => {
+
+   let wasFound = true;
+
+   state.userList = state.userList.map( ( user ) => {
+      if ( user.id  === userProcessed.id ) {
+         wasFound = true;
+         return userProcessed;
+      }
+
+      return user;      
+   })
+
+   if ( state.userList.length < 10 && !wasFound ) {
+      state.userList.push( user );
+   }
 }
 
 const reloadPage = () => {
@@ -33,7 +51,7 @@ const reloadPage = () => {
 export default {
    loadNextPage,
    loadPreviousPage,
-   onUserChanger,
+   onUserChanged,
    reloadPage,
    /**
     * 
