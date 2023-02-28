@@ -1,5 +1,6 @@
 import { User } from "../models/user";
 import { userModelToLocalhostUser } from '../mappers/user-to-localhost.mapper';
+import { localhostUserToModel } from "../mappers/localhost-user.mapper";
 
 /**
  * 
@@ -14,22 +15,22 @@ export const saveUser = async( userLike ) => {
     }
 
     const userToSave = userModelToLocalhostUser( user );
+    let userProcessed;
     
     if ( user.id ) {
-        throw ' not implemented';
-        return;
+        userProcessed = await updateUser( userToSave );
+    } else {
+        userProcessed = await createUser( userToSave );
     }
 
-    const updatedUser = await createUSer( userToSave );
-
-    return updatedUser;
+    return localhostUserToModel( userProcessed );
 }
 
 /**
  * 
  * @param { Like<User> } userLike 
  */
-const createUSer = async( userLike ) => {
+const createUser = async( userLike ) => {
     const url = `${ import.meta.env.VITE_BASE_URL }/users`;
     const response = await fetch( url, {
         method: 'POST',
@@ -39,7 +40,22 @@ const createUSer = async( userLike ) => {
         }
     } );
     
-    const newUser = response.json();
-    console.log(newUser);
+    const newUser = await response.json();
+    console.log({newUser});
     return newUser;
+}
+
+const updateUser = async( userLike ) => {
+    const url = ` ${ import.meta.env.VITE_BASE_URL }/users/${ userLike.id } `;
+    const response = await fetch( url, {
+        method: 'PATCH',
+        body: JSON.stringify( userLike ),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    } );
+
+    const updatedUser = await response.json();
+
+    return updatedUser;
 }
